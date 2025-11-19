@@ -69,10 +69,10 @@ This outlines the relationships (one-to-one, one-to-many, many-to-many) between 
 
 | Relationship | Type | Explanation |
 |-------------|------|-------------|
-| Customer and Order | `[YOUR ANSWER HERE]` | `[YOUR EXPLANATION HERE]` |
-| Order and Order_details | `[YOUR ANSWER HERE]` | `[YOUR EXPLANATION HERE]` |
-| Product and Order_details | `[YOUR ANSWER HERE]` | `[YOUR EXPLANATION HERE]` |
-| Category and Product | `[YOUR ANSWER HERE]` | `[YOUR EXPLANATION HERE]` |
+| Customer and Order | `One to many` | `A customer can place many orders, but each order belongs to one customer.` |
+| Order and Order_details | `One to many` | `Each order can contain multiple order detail records, but each order detail belongs to only one order.` |
+| Product and Order_details | `One to many` | `A product can appear in many order detail records, but each order detail refers to a single product.` |
+| Category and Product | `One to many` | `A category can have many products, but each product belongs to one category.` |
 
 ### 1.3. The ERD Diagram
 
@@ -92,7 +92,29 @@ This section contains SQL queries developed to retrieve specific business intell
 
 **Parameters:** Specific date (e.g., `'2025-11-18'`)
 
-
+**Example query**:
+```
+SELECT 
+    customer.customer_id, 
+    customer.first_name, 
+    customer.last_name, 
+    SUM("order".total_amount) AS total_order_amount
+FROM 
+    customer
+JOIN 
+    "order" ON customer.customer_id = "order".customer_id
+WHERE 
+    EXTRACT(MONTH FROM order_date) = <MONTH_NUMBER>
+    AND EXTRACT(YEAR FROM order_date) = <YEAR_NUMBER>
+GROUP BY 
+    customer.customer_id, customer.first_name, customer.last_name
+HAVING 
+    SUM("order".total_amount) >= 500
+ORDER BY 
+    total_order_amount DESC
+LIMIT 
+    <N>;
+```
 
 ### 2.2. Top-Selling Products Report
 
@@ -100,7 +122,25 @@ This section contains SQL queries developed to retrieve specific business intell
 
 **Parameters:** Specific month and year (e.g., `2025-11`)
 
-
+**Example query**:
+```
+SELECT 
+    product_id,
+    SUM(quantity) AS total_units_sold
+FROM 
+    "order"
+JOIN 
+    order_details ON "order".order_id = order_details.order_id
+WHERE 
+    EXTRACT(MONTH FROM order_date) = <MONTH_NUMBER>
+    AND EXTRACT(YEAR FROM order_date) = <YEAR_NUMBER>
+GROUP BY 
+    product_id
+ORDER BY 
+    total_units_sold DESC
+LIMIT 
+    <N>;
+```
 
 ### 2.3. High-Value Customer List
 
@@ -108,8 +148,17 @@ This section contains SQL queries developed to retrieve specific business intell
 
 **Parameters:** Relative to `CURRENT_DATE`
 
-
-
+**Example query**:
+```
+SELECT 
+    order_date, 
+    SUM(total_amount) AS daily_revenue
+FROM 
+    "order"
+WHERE 
+    order_date = '<SPECIFIC_DATE>'
+GROUP BY
+```
 
 ## 3. Denormalization Mechanism
 
