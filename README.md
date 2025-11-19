@@ -95,25 +95,14 @@ This section contains SQL queries developed to retrieve specific business intell
 **Example query**:
 ```
 SELECT 
-    customer.customer_id, 
-    customer.first_name, 
-    customer.last_name, 
-    SUM("order".total_amount) AS total_order_amount
+    order_date, 
+    SUM(total_amount) AS daily_revenue
 FROM 
-    customer
-JOIN 
-    "order" ON customer.customer_id = "order".customer_id
+    "order"
 WHERE 
-    EXTRACT(MONTH FROM order_date) = <MONTH_NUMBER>
-    AND EXTRACT(YEAR FROM order_date) = <YEAR_NUMBER>
+    order_date = <SPECIFIC_DATE>
 GROUP BY 
-    customer.customer_id, customer.first_name, customer.last_name
-HAVING 
-    SUM("order".total_amount) >= 500
-ORDER BY 
-    total_order_amount DESC
-LIMIT 
-    <N>;
+    order_date;
 ```
 
 ### 2.2. Top-Selling Products Report
@@ -151,13 +140,25 @@ LIMIT
 **Example query**:
 ```
 SELECT 
-    order_date, 
-    SUM(total_amount) AS daily_revenue
+    customer.customer_id, 
+    customer.first_name, 
+    customer.last_name, 
+    SUM("order".total_amount) AS total_order_amount
 FROM 
-    "order"
+    customer
+JOIN 
+    "order" ON customer.customer_id = "order".customer_id
 WHERE 
-    order_date = '<SPECIFIC_DATE>'
-GROUP BY
+    EXTRACT(MONTH FROM order_date) = <MONTH_NUMBER>
+    AND EXTRACT(YEAR FROM order_date) = <YEAR_NUMBER>
+GROUP BY 
+    customer.customer_id, customer.first_name, customer.last_name
+HAVING 
+    SUM("order".total_amount) >= 500
+ORDER BY 
+    total_order_amount DESC
+LIMIT 
+    <N>;
 ```
 
 ## 3. Denormalization Mechanism
