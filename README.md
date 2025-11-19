@@ -167,7 +167,23 @@ This section explains how denormalization could be applied to improve read perfo
 
 ### 3.1. Denormalization on Customer and Order Entities
 
-**Goal:** Explain a denormalization mechanism on the `Customer` and `Order` entities.
+- First, we need to identify the data we frequently need from joining the Customer and Order tables — let's assume in this case, the customer’s first name, last name, and order ID. 
+- Next, we can create a new table to store the precomputed results of this join. 
+- Finally, we should ensure this table stays up to date by using triggers or scheduled updates, so that any changes in the Customer or Order tables are reflected in the precomputed table.
+
+The SQL script to create the table will be:
+```
+CREATE TABLE OrderCustomerInfo (
+    order_id INT PRIMARY KEY,
+    customer_first_name VARCHAR(50),
+    customer_last_name VARCHAR(50)
+);
+
+INSERT INTO OrderCustomerInfo(order_id, customer_first_name, customer_last_name)
+SELECT order.order_id, customer.first_name, customer.last_name
+FROM "order"
+JOIN customer ON order.customer_id = customer.customer_id;
+```
 
 
 
