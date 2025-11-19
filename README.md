@@ -63,3 +63,69 @@ CREATE TABLE order_details (
 );
 ```
 
+### 1.2. Entity Relationships Identification
+
+This outlines the relationships (one-to-one, one-to-many, many-to-many) between the core entities.
+
+| Relationship | Type | Explanation |
+|-------------|------|-------------|
+| Customer and Order | `[YOUR ANSWER HERE]` | `[YOUR EXPLANATION HERE]` |
+| Order and Order_details | `[YOUR ANSWER HERE]` | `[YOUR EXPLANATION HERE]` |
+| Product and Order_details | `[YOUR ANSWER HERE]` | `[YOUR EXPLANATION HERE]` |
+| Category and Product | `[YOUR ANSWER HERE]` | `[YOUR EXPLANATION HERE]` |
+
+### 1.3. The ERD Diagram
+
+The Entity-Relationship Diagram (ERD) visually represents the normalized schema, including primary keys, foreign keys, and cardinalities.
+
+**ERD Image:**
+<img width="1279" height="551" alt="e-commerce prototype" src="https://github.com/user-attachments/assets/b52d6597-9d79-41f5-b07a-4a469e0978ef" />
+
+
+## 2. SQL Query Analysis
+
+This section contains SQL queries developed to retrieve specific business intelligence metrics.
+
+### 2.1. Daily Revenue Report
+
+**Goal:** Write an SQL query to generate a daily report of the total revenue for a specific date.
+
+**Parameters:** Specific date (e.g., `'2025-11-18'`)
+
+
+
+### 2.2. Top-Selling Products Report
+
+**Goal:** Write an SQL query to generate a monthly report of the top-selling products in a given month.
+
+**Parameters:** Specific month and year (e.g., `2025-11`)
+
+
+
+### 2.3. High-Value Customer List
+
+**Goal:** Write a complex SQL query to retrieve customers who have placed orders totaling more than **$500** in the past month. Include customer name and their total order amount.
+
+**Parameters:** Relative to `CURRENT_DATE`
+
+
+
+
+## 3. Denormalization Mechanism
+
+This section explains how denormalization could be applied to improve read performance for frequently accessed data.
+
+### 3.1. Denormalization on Customer and Order Entities
+
+**Goal:** Explain a denormalization mechanism on the `Customer` and `Order` entities.
+
+
+
+
+
+
+
+
+
+
+
