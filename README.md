@@ -188,6 +188,7 @@ JOIN customer ON order.customer_id = customer.customer_id;
 Pros:
 - Avoids joins at query time which means faster reads
 - Keeps the original Customer and Order tables normalized
+  
 Cons:
 - Still redundant data (customer names duplicated in this table)
 - Updates to customer names must propagate to this table which means extra write logic
